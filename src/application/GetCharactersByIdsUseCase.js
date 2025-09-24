@@ -4,7 +4,6 @@ const { Character, Location, Episode } = require('../infrastructure/db/sequelize
 
 class GetCharactersByIdsUseCase {
   async execute(ids) {
-    // Crear clave de caché basada en los IDs ordenados
     const sortedIds = [...ids].sort((a, b) => a - b);
     const key = `characters:${sortedIds.join(',')}`;
     const cached = await cache.get(key);
