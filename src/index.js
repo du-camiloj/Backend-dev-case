@@ -49,9 +49,11 @@ const { PORT = 4000 } = process.env;
 (async () => {
   try {
     await db.sequelize.authenticate();
-    console.log('DB connected');
+    console.log('\nDB connected');
     // schedule();
-    app.listen(PORT, () => console.log(`API ready -> http://localhost:${PORT}/health`));
+    app.listen(PORT, () => console.log(
+      `API ready -> http://localhost:${PORT}/health \nGraphQL -> http://localhost:${PORT}/graphql\n`
+    ));
   } catch (e) {
     console.error('Startup error:', e);
     process.exit(1);
