@@ -22,7 +22,35 @@ class characterFiltering {
       order: [['id', 'ASC']],
       limit, offset
     });
-    return { items: rows, total: count };
+    return { items: rows, total: rows.length };
+  }
+
+  async findById(id) {
+    if (!id) return null;
+    const character = await Character.findByPk(id, {
+      include: [
+        { model: Location, as: 'origin' },
+        { model: Location, as: 'location' },
+        { model: Episode, as: 'episodes', through: { attributes: [] } }
+      ]
+    });
+    return character;
+  }
+
+  async findByIds(ids = []) {
+    if (!ids || !ids.length) return [];
+    const parsed = ids.map((x) => Number(x)).filter((n) => !Number.isNaN(n));
+    if (!parsed.length) return [];
+    const characters = await Character.findAll({
+      where: { id: parsed },
+      include: [
+        { model: Location, as: 'origin' },
+        { model: Location, as: 'location' },
+        { model: Episode, as: 'episodes', through: { attributes: [] } }
+      ],
+      order: [['id', 'ASC']]
+    });
+    return characters;
   }
 }
 module.exports = new characterFiltering();

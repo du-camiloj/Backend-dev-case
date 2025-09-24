@@ -10,8 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(logger);
 
-// Health
-app.get('/health', (_, res) => res.json({ ok: true }));
+app.get('/', (_, res) => res.json({ ok: true }));
 
 // GraphQL endpoint
 app.use('/graphql', async (req, res) => {
@@ -45,14 +44,14 @@ app.use('/graphql', async (req, res) => {
   }
 });
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3030 } = process.env;
 (async () => {
   try {
     await db.sequelize.authenticate();
     console.log('\nDB connected');
     // schedule();
     app.listen(PORT, () => console.log(
-      `API ready -> http://localhost:${PORT}/health \nGraphQL -> http://localhost:${PORT}/graphql\n`
+      `API ready -> http://localhost:${PORT}/ \nGraphQL -> http://localhost:${PORT}/graphql\n`
     ));
   } catch (e) {
     console.error('Startup error:', e);

@@ -49,6 +49,8 @@ const typeDefs = /* GraphQL */ `
 
   type Query {
     characters(filter: CharacterFilter, limit: Int = 20, offset: Int = 0): CharacterPage!
+    character(id: ID!): Character
+    charactersByIds(ids: [ID!]!): [Character!]!
   }
 `;
 
